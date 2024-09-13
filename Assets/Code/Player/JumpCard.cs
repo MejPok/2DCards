@@ -5,6 +5,7 @@ using UnityEngine;
 public class JumpCard : MonoBehaviour
 {
     public bool playerCard;
+    public bool starter;
     float timer;
     int clicked;
 
@@ -13,6 +14,10 @@ public class JumpCard : MonoBehaviour
             return;
         } else {
             transform.position = new Vector2(transform.position.x, 5f);
+        }
+        if(starter){
+            playerCard = false;
+            transform.position = new Vector3(-0.5f, 0f, 0f);
         }
     }
     void Update(){

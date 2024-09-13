@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D.IK;
 
 public class GameState : MonoBehaviour
@@ -51,7 +52,9 @@ public class GameState : MonoBehaviour
 
     public void Update(){
         if(playerInv.currentCards.Count == 0){
-
+            SceneManager.LoadScene(1);
+        } else if(opponent.currentCards.Count == 0){
+            SceneManager.LoadScene(2);
         }
 
         col = colorOnTable;
@@ -71,20 +74,15 @@ public class GameState : MonoBehaviour
     }
     public void Start(){
         gs = this;
-        turn = 1;//Random.Range(0,2);
-
-        numberOnTable = Random.Range(7,15);
-
-        int rand = Random.Range(0, 4);
-        if(rand == 0){
-            colorOnTable = "Red";
-        } else if(rand == 1){
-            colorOnTable = "Yellow";
-        } else if(rand == 2){
-            colorOnTable = "Brown";
-        } else if(rand == 3){
-            colorOnTable = "Green";
-        }
+        turn = 1;
+        Vector3 posi = new Vector3(-0.5f, 0f, 0f);
+        GameObject prefab = cc.ch.cards[Random.Range(0, 32)];
+        GameObject newcard = Instantiate(prefab);
+        newcard.GetComponent<JumpCard>().starter = true;
+        newcard.transform.position = posi;
+        CardInfo info = newcard.GetComponent<CardInfo>();
+        colorOnTable = info.Color;
+        numberOnTable = info.Number;
     }
     public void StartNow(){
         for(int i = 0; i < 4; i++){
