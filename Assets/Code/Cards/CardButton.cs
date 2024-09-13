@@ -6,12 +6,15 @@ using UnityEngine.EventSystems;
 public class CardButton : MonoBehaviour
 {
 
+
     public void OnMouseDown()
     {
         DealNewCard();
     }
     
     public void DealNewCard(){
-        GameState.gs.DrawCardTo("player");
+        if(GameState.turn == 1){
+            GameState.gs.player.DrawCard();
+        }
     }
 }
