@@ -14,9 +14,8 @@ public class GameState : MonoBehaviour
         gs = this;
     }
     public void StartNow(){
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 6; i++){
             DrawCardTo("player");
-            DrawCardTo("opponent");
         }
     }
 
@@ -24,6 +23,7 @@ public class GameState : MonoBehaviour
         GameObject newcard = Instantiate(cc.newValidCard());
 
         if(who == "player"){
+            newcard.transform.position = new Vector3(0, -3, 0);
             player.currentCards.Add(newcard);
         } else {
             opponent.currentCards.Add(newcard);
