@@ -29,19 +29,22 @@ public class CardCounter : MonoBehaviour
     }
 
     public GameObject newValidCard(){
-        /*int random = Random.Range(0, 32);
-        GameObject chosenOne = ch.cards[random];
-        if(counter[chosenOne] == 0){
-            counter[chosenOne] = 1;
-            return chosenOne;
-        } else {
-            if(!cardsAllOut()){
-                return newValidCard();
-            } else {
-                Debug.Log("No cards left");
+        List<GameObject> chosenCards = new List<GameObject>();
+
+        foreach(KeyValuePair<GameObject, int> entry in counter){
+            if(entry.Value == 0){
+                chosenCards.Add(entry.Key);
             }
         }
-        return null; */
+        int randomNumber = Random.Range(0, chosenCards.Count + 1);
+
+        if(chosenCards.Count == 0){
+            Debug.Log("No cards left ig");
+            return null;
+        }
+        counter[chosenCards[randomNumber]]++;
+
+        return chosenCards[randomNumber];
     }
 
     public void ReturnTheCard(GameObject card){

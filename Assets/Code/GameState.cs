@@ -50,6 +50,7 @@ public class GameState : MonoBehaviour
             randTimer = Random.Range(0.2f, 3.5f);
             think = true;
         }
+        ccolor.colorPicked.text = "";
         
     }
 
