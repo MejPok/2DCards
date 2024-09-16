@@ -33,6 +33,9 @@ public class GameState : MonoBehaviour
     float randTimer;
     bool think;
 
+    public bool choosingcColorAlready;
+    public ChoosingColor ccolor;
+
 
     public void nextTurn(){
         turn++;
@@ -126,6 +129,9 @@ public class GameState : MonoBehaviour
         if(Stand == true){
             return (cardI.Number == 14);
         }
+        if(cardI.Number == 12){
+            return true;
+        }
 
         return (cardI.Number == numberOnTable || cardI.Color == colorOnTable);
 
@@ -143,6 +149,20 @@ public class GameState : MonoBehaviour
             if(cardI.Number == 14){
                 Stand = true;
             }
+            if(cardI.Number == 12){
+                if(turn == 0){
+
+                    cc.ReturnTheCard(card);
+                    ccolor.ChooseColor(ChooseColorForEnemyAdvantage());
+                    Debug.Log($"Card with number {cardI.Number} and color {cardI.Color} was played");
+                } else if(!choosingcColorAlready){
+
+                    ccolor.ColorPad();
+                    GameState.gs.cc.ReturnTheCard(card);
+                    choosingcColorAlready = true;
+                }
+                return;
+            }
         } else {
             Debug.Log("incorrect card");
         }
@@ -152,5 +172,39 @@ public class GameState : MonoBehaviour
     }
     public void StandOff(){
         Stand = false;
+    }
+    public int ChooseColorForEnemyAdvantage(){
+        Dictionary<string, int> map = new Dictionary<string, int>();
+
+        foreach(GameObject card in opponent.currentCards){
+            CardInfo cardI = card.GetComponent<CardInfo>();
+            if(map.ContainsKey(cardI.Color)){
+                map[cardI.Color] += 1;
+            } else {
+                map.Add(cardI.Color, 1);
+            }
+        }
+
+        string largestColor = "";
+        int largestCount = 0;
+
+        foreach(KeyValuePair<string, int> entry in map){
+            if(entry.Value > largestCount){
+                largestCount = entry.Value;
+                largestColor = entry.Key;
+            }
+        }
+        Debug.Log(largestCount + largestColor);
+        switch(largestColor){
+            case "Brown":
+                return 0;
+            case "Green":
+                return 1;
+            case "Red":
+                return 2;
+            case "Yellow":
+                return 3;
+        }   
+        return 0;
     }
 }

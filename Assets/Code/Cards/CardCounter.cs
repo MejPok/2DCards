@@ -29,7 +29,7 @@ public class CardCounter : MonoBehaviour
     }
 
     public GameObject newValidCard(){
-        int random = Random.Range(0, 32);
+        /*int random = Random.Range(0, 32);
         GameObject chosenOne = ch.cards[random];
         if(counter[chosenOne] == 0){
             counter[chosenOne] = 1;
@@ -41,7 +41,7 @@ public class CardCounter : MonoBehaviour
                 Debug.Log("No cards left");
             }
         }
-        return null;
+        return null; */
     }
 
     public void ReturnTheCard(GameObject card){
